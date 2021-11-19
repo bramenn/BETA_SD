@@ -4,14 +4,18 @@ LABEL name="api-clima"
 LABEL authors="Alejandro Herrera"
 LABEL description="API para consultar el clima"
 
+RUN apk add --no-cache --virtual alpine-sdk autoconf automake libtool gcc g++ make libffi-dev openssl-dev postgresql-dev
+RUN /usr/local/bin/python -m pip install --upgrade pip
+
+COPY requirements.txt ./
+RUN pip install -r requirements.txt
+
+RUN apk del alpine-sdk autoconf automake libtool gcc g++ make libffi-dev openssl-dev postgresql-dev
+
 WORKDIR /opt
 
 COPY . ./
 
 VOLUME ["/config", "/logs"]
 
-RUN apk add --no-cache --virtual alpine-sdk autoconf automake libtool gcc g++ make libffi-dev openssl-dev postgresql-dev && \
-    pip install -r requirements.txt && \
-    apk del alpine-sdk autoconf automake libtool gcc g++ make libffi-dev openssl-dev postgresql-dev
-
-CMD [ "python3", "main.py" ]
+CMD [ "python3", "app/main.py" ]

@@ -15,7 +15,7 @@ from Clima import modelo
 
 # Se importa la configuracion de la bd
 import db
-from config import config
+from .config import config
 # Se crea la aplicacion de FastApi
 app = FastAPI()
 
