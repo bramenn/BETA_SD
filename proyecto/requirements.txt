@@ -4,3 +4,5 @@ sqlalchemy
 psycopg2-binary
 watchdog
 PyYAML
+databases[postgresql]==0.4.1
+psycopg2==2.8.6

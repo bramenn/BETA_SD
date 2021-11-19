@@ -16,6 +16,7 @@ services:
     build: proyecto
     restart: unless-stopped
     volumes:
+      - ./proyecto:/opt
       - ./config:/opt/config
     depends_on:
       - postgres
