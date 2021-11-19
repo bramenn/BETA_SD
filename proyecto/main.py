@@ -15,7 +15,7 @@ from Clima import modelo
 
 # Se importa la configuracion de la bd
 import db
-
+from config import config
 # Se crea la aplicacion de FastApi
 app = FastAPI()
 
@@ -33,4 +33,5 @@ if __name__ == "__main__":
     db.Base.metadata.create_all(db.conn)
 
     #Corre el servidor de uvicorn para la api
-    uvicorn.run(app="main:app", )
+    args = config.get("allowed_args_for_uvicorn")
+    uvicorn.run(app="main:app", **args)
