@@ -4,8 +4,11 @@
 # Aqui importamos todas las rutas que va encontrar uvicorn
 # uvicorn las podra hacer visibles a consultas de cualquier persona (cliente)
 
-from fastapi import FastAPI
 import uvicorn
+from fastapi import FastAPI
+import logging
+
+logger = logging.getLogger()
 
 # Se importan todas las rutas
 from Clima import rutas as rutas_clima
@@ -14,8 +17,8 @@ from Clima import rutas as rutas_clima
 from Clima import modelo
 
 # Se importa la configuracion de la bd
-import db
-from config import config
+from db import get_db
+# from config import config
 # Se crea la aplicacion de FastApi
 app = FastAPI()
 
@@ -25,13 +28,5 @@ app = FastAPI()
 app.include_router(rutas_clima.router , prefix="/v1/clima", tags=["climas"])
 
 
-# Aqui se corre el programa
 if __name__ == "__main__":
-
-    # Corre las migraciones de la bd
-    print("Corriendo migraciones de la bd")
-    db.Base.metadata.create_all(db.conn)
-
-    #Corre el servidor de uvicorn para la api
-    args = config.get("allowed_args_for_uvicorn")
-    uvicorn.run(app="main:app", **args)
+    uvicorn.run(app="main:app", host="0.0.0.0", port=8000)

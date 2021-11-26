@@ -4,7 +4,7 @@ database: postgresql://beta_sd:lag404@postgres/clima
 allowed_args_for_uvicorn:
   host: "0.0.0.0"
   port: 8000
-  reload: false
+  reload: true
 
 logging:
   version: 1

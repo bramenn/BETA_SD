@@ -14,10 +14,11 @@ services:
       - ./schemas:/var/lib/postgresql/data
   api:
     build: proyecto
-    restart: unless-stopped
     volumes:
       - ./proyecto:/opt
       - ./config:/opt/config
     depends_on:
       - postgres
-    entrypoint: watchmedo auto-restart --recursive --pattern="*.py" --directory="." /opt/docker-run.sh
+    ports:
+      - 8000:8000
+    # entrypoint: watchmedo auto-restart --recursive --pattern="*.py" --directory="." /opt/docker-run.sh
