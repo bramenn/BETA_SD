@@ -1,2 +1,2 @@
 #!/bin/sh
-exec uvicorn app.main:app --reload
+exec python3 app/main.py

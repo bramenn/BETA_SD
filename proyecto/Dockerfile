@@ -25,4 +25,4 @@ COPY . ./
 
 VOLUME ["/config", "/logs"]
 
-CMD [ "python3", "app/main.py" ]
+CMD [ "python", "app/main.py" ]

@@ -1,7 +1,6 @@
 import logging.config
 import yaml
 
-logger = logging.getLogger()
 
 
 def init_config():
@@ -10,9 +9,6 @@ def init_config():
     config = None
     with open(filepath) as file_stream:
         config = yaml.full_load(file_stream)
-
-    logging.config.dictConfig(config.get("logging"))
-    logger.debug("starting config...")
     return config
 
 
