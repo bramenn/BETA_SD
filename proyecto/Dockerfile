@@ -9,14 +9,20 @@ RUN apk add --no-cache --virtual .build-deps \
     gcc \
     python3-dev \
     musl-dev \
-    postgresql-dev
+    postgresql-dev \
+    alpine-sdk \
+    autoconf \
+    automake \
+    libtool \
+    g++ \
+    make \
+    libffi-dev \
+    openssl-dev \
+    postgresql-libs
 
-RUN apk add --no-cache --virtual alpine-sdk autoconf automake libtool gcc g++ make libffi-dev openssl-dev postgresql-dev postgresql-libs
 
-
-RUN /usr/local/bin/python -m pip install --upgrade pip
-
-RUN pip install --no-cache-dir psycopg2 && \
+RUN /usr/local/bin/python -m pip install --upgrade pip && \
+    pip install --no-cache-dir psycopg2 && \
     pip install -r requirements.txt
 
 WORKDIR /opt
