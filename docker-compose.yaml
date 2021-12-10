@@ -1,24 +1,35 @@
-version: "3.5"
-
+version: "3.7"
+# DEFINIMOS LOS SERVICIOS
 services:
-
+  # UN SERVICIO DE LA BD
   postgres:
+    # DEFINIMOS LA IMAGEN DE DOCKER PARA POSTGRES
     image: docker.io/postgres:10-alpine
+    # SE DEFINEN VARIABLES DE ENTORNO DE POSTGRES
     environment:
       POSTGRES_USER: beta_sd
       POSTGRES_PASSWORD: lag404
       POSTGRES_DATABASE: clima
       POSTGRES_INITDB_ARGS: --encoding=UTF-8 --lc-collate=C --lc-ctype=C
+    # cuando el contenedor se detiene (manualmente o de otra manera), no se reinicia incluso
+    # después de que se reinicia el demonio de Docker.
     restart: unless-stopped
+    # CREAMOS UN VOLUMEN QUE VA PERMITIR SACAR IFORMACIÓN NECESARIA DEL CONTENEDOR
     volumes:
       - ./schemas:/var/lib/postgresql/data
+
+  # CREAMOS EL SERVICIO DE LA API
   api:
+    # LA CONSTRUIMOS BASANDONOS EN EL DOCKERFILE DEL PROYECTO
     build: proyecto
+    # LE DEFINIMOS ALGUNOS VOLUMENEAS
     volumes:
       - ./proyecto:/opt
       - ./config:/opt/config
+      - ./logs:/opt/logs
+    # ESTE SERVICIO DEPENDE DE EL SERVICIO POSTGRES
     depends_on:
       - postgres
+    # EXPONEMOS EL PUERTO 8000 DEL CONTENDERO AL 8000 DE ESTA MAQUINA
     ports:
       - 8000:8000
-    # entrypoint: watchmedo auto-restart --recursive --pattern="*.py" --directory="." /opt/docker-run.sh
